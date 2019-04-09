@@ -18,8 +18,7 @@ Download zip
 excract and rename folder inside cy_multibankwire-master to cy_multibankwire
 
 method 1:
-compress to zip 
-in prestashop backend go to Modules manage -> click add module and upload zip file
+compress to zip, in prestashop backend go to Modules manage -> click add module and upload zip file
 
 method 2: 
 Upload folder cy_multibankwire to modules catalog 
