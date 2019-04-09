@@ -60,14 +60,14 @@ class cy_multibankwire extends PaymentModule
         $this->bootstrap = true;
         parent::__construct();
 
-        $this->displayName = $this->trans('Cy Multi Wire payment', array(), 'Modules.cy_multibankwire.Admin');
-        $this->description = $this->trans('Accept payments by bank transfer.', array(), 'Modules.cy_multibankwire.Admin');
-        $this->confirmUninstall = $this->trans('Are you sure about removing these details?', array(), 'Modules.cy_multibankwire.Admin');
+        $this->displayName = $this->getTranslator()->trans('Cy Multi Wire payment', array(), 'Modules.cy_multibankwire.Admin');
+        $this->description = $this->getTranslator()->trans('Accept payments by bank transfer.', array(), 'Modules.cy_multibankwire.Admin');
+        $this->confirmUninstall = $this->getTranslator()->trans('Are you sure about removing these details?', array(), 'Modules.cy_multibankwire.Admin');
         if (!isset($this->owner) || !isset($this->details) || !isset($this->address)) {
-            $this->warning = $this->trans('Account owner and account details must be configured before using this module.', array(), 'Modules.cy_multibankwire.Admin');
+            $this->warning = $this->getTranslator()->trans('Account owner and account details must be configured before using this module.', array(), 'Modules.cy_multibankwire.Admin');
         }
         if (!count(Currency::checkPaymentCurrencies($this->id))) {
-            $this->warning = $this->trans('No currency has been set for this module.', array(), 'Modules.cy_multibankwire.Admin');
+            $this->warning = $this->getTranslator()->trans('No currency has been set for this module.', array(), 'Modules.cy_multibankwire.Admin');
         }
 
         $this->extra_mail_vars = array(
@@ -125,9 +125,9 @@ class cy_multibankwire extends PaymentModule
             foreach ($languages as $lang) {
             	foreach ($curencies as $c) {
 			            if (!Tools::getValue($c['iso_code'].'_CY_MILTI_BANK_WIRE_DETAILS_'.$lang['id_lang'])) {
-			                $this->_postErrors[] = $this->trans('Account details are required.', array(), 'Modules.cy_multibankwire.Admin')." [".$c['iso_code']."][".$lang['iso_code']."]";
+			                $this->_postErrors[] = $this->getTranslator()->trans('Account details are required.', array(), 'Modules.cy_multibankwire.Admin')." [".$c['iso_code']."][".$lang['iso_code']."]";
 			            } elseif (!Tools::getValue($c['iso_code'].'_CY_MILTI_BANK_WIRE_OWNER_'.$lang['id_lang'])) {
-			                $this->_postErrors[] = $this->trans('Account owner is required.', array(), "Modules.cy_multibankwire.Admin")." [".$c['iso_code']."][".$lang['iso_code']."]";
+			                $this->_postErrors[] = $this->getTranslator()->trans('Account owner is required.', array(), "Modules.cy_multibankwire.Admin")." [".$c['iso_code']."][".$lang['iso_code']."]";
 			            }
 					}
 			}
@@ -170,7 +170,7 @@ class cy_multibankwire extends PaymentModule
 			}
             
         }
-        $this->_html .= $this->displayConfirmation($this->trans('Settings updated', array(), 'Admin.Global'));
+        $this->_html .= $this->displayConfirmation($this->getTranslator()->trans('Settings updated', array(), 'Admin.Global'));
     }
 
     protected function _displayBankWire()
@@ -215,7 +215,7 @@ class cy_multibankwire extends PaymentModule
 
         $newOption = new PaymentOption();
         $newOption->setModuleName($this->name)
-                ->setCallToActionText($this->trans('CY Pay by bank wire', array(), 'Modules.cy_multibankwire.Shop'))
+                ->setCallToActionText($this->getTranslator()->trans('CY Pay by bank wire', array(), 'Modules.cy_multibankwire.Shop'))
                 ->setAction($this->context->link->getModuleLink($this->name, 'validation', array(), true))
                 ->setAdditionalInformation($this->fetch('module:cy_multibankwire/views/templates/hook/cy_multibankwire_intro.tpl'));
         $payment_options = [
@@ -311,7 +311,7 @@ class cy_multibankwire extends PaymentModule
     			$tabs[$c['iso_code']]= $c['name'];
 				$formfields[] =[
 			            'type' => 'text',
-			                'label' => $this->trans('Account owner', array(), 'Modules.cy_multibankwire.Admin')." [".$c['iso_code']."]",
+			                'label' => $this->getTranslator()->trans('Account owner', array(), 'Modules.cy_multibankwire.Admin')." [".$c['iso_code']."]",
 			                'name' => $c['iso_code'].'_CY_MILTI_BANK_WIRE_OWNER',
 			                'required' => true,
 			                'lang' => true,
@@ -320,16 +320,16 @@ class cy_multibankwire extends PaymentModule
 			            
 				$formfields[] =[
 			                'type' => 'textarea',
-			                'label' => $this->trans('Account details', array(), 'Modules.cy_multibankwire.Admin')." [".$c['iso_code']."]",
+			                'label' => $this->getTranslator()->trans('Account details', array(), 'Modules.cy_multibankwire.Admin')." [".$c['iso_code']."]",
 			                'name' => $c['iso_code'].'_CY_MILTI_BANK_WIRE_DETAILS',
-			                'desc' => $this->trans('Such as bank branch, IBAN number, BIC, etc.', array(), 'Modules.cy_multibankwire.Admin'),
+			                'desc' => $this->getTranslator()->trans('Such as bank branch, IBAN number, BIC, etc.', array(), 'Modules.cy_multibankwire.Admin'),
 			                'required' => true,
 			                'lang' => true,
 			                'tab' => $c['iso_code'],
 			           ];
 				$formfields[] =[
 			                'type' => 'textarea',
-			                'label' => $this->trans('Bank address', array(), 'Modules.cy_multibankwire.Admin')." [".$c['iso_code']."]",
+			                'label' => $this->getTranslator()->trans('Bank address', array(), 'Modules.cy_multibankwire.Admin')." [".$c['iso_code']."]",
 			                'name' => $c['iso_code'].'_CY_MILTI_BANK_WIRE_ADDRESS',
 			                'required' => true,
 			                'lang' => true,
@@ -342,12 +342,12 @@ class cy_multibankwire extends PaymentModule
         $fields_form = array(
             'form' => array(
                 'legend' => array(
-                    'title' => $this->trans('Account details', array(), 'Modules.cy_multibankwire.Admin'),
+                    'title' => $this->getTranslator()->trans('Account details', array(), 'Modules.cy_multibankwire.Admin'),
                     'icon' => 'icon-envelope'
                 ),
                 'input' => $formfields,
                 'submit' => array(
-                    'title' => $this->trans('Save', array(), 'Admin.Actions'),
+                    'title' => $this->getTranslator()->trans('Save', array(), 'Admin.Actions'),
                 )
             ),
         );
@@ -355,45 +355,45 @@ class cy_multibankwire extends PaymentModule
             'form' => array(
 	           	'tabs'	=> $tabs,
                 'legend' => array(
-                    'title' => $this->trans('Customization', array(), 'Modules.cy_multibankwire.Admin'),
+                    'title' => $this->getTranslator()->trans('Customization', array(), 'Modules.cy_multibankwire.Admin'),
                     'icon' => 'icon-cogs'
                 ),
                 'input' => array(
                     array(
                         'type' => 'text',
-                        'label' => $this->trans('Reservation period', array(), 'Modules.cy_multibankwire.Admin'),
-                        'desc' => $this->trans('Number of days the items remain reserved', array(), 'Modules.cy_multibankwire.Admin'),
+                        'label' => $this->getTranslator()->trans('Reservation period', array(), 'Modules.cy_multibankwire.Admin'),
+                        'desc' => $this->getTranslator()->trans('Number of days the items remain reserved', array(), 'Modules.cy_multibankwire.Admin'),
                         'name' => 'CY_MILTI_BANK_WIRE_RESERVATION_DAYS',
                     ),
                     array(
                         'type' => 'textarea',
-                        'label' => $this->trans('Information to the customer', array(), 'Modules.cy_multibankwire.Admin'),
+                        'label' => $this->getTranslator()->trans('Information to the customer', array(), 'Modules.cy_multibankwire.Admin'),
                         'name' => 'CY_MILTI_BANK_WIRE_CUSTOM_TEXT',
-                        'desc' => $this->trans('Information on the bank transfer (processing time, starting of the shipping...)', array(), 'Modules.cy_multibankwire.Admin'),
+                        'desc' => $this->getTranslator()->trans('Information on the bank transfer (processing time, starting of the shipping...)', array(), 'Modules.cy_multibankwire.Admin'),
                         'lang' => true
                     ),
                     array(
                         'type' => 'switch',
-                        'label' => $this->trans('Display the invitation to pay in the order confirmation page', array(), 'Modules.cy_multibankwire.Admin'),
+                        'label' => $this->getTranslator()->trans('Display the invitation to pay in the order confirmation page', array(), 'Modules.cy_multibankwire.Admin'),
                         'name' => self::FLAG_DISPLAY_PAYMENT_INVITE,
                         'is_bool' => true,
-                        'hint' => $this->trans('Your country\'s legislation may require you to send the invitation to pay by email only. Disabling the option will hide the invitation on the confirmation page.', array(), 'Modules.cy_multibankwire.Admin'),
+                        'hint' => $this->getTranslator()->trans('Your country\'s legislation may require you to send the invitation to pay by email only. Disabling the option will hide the invitation on the confirmation page.', array(), 'Modules.cy_multibankwire.Admin'),
                         'values' => array(
                             array(
                                 'id' => 'active_on',
                                 'value' => true,
-                                'label' => $this->trans('Enabled', array(), 'Admin.Global'),
+                                'label' => $this->getTranslator()->trans('Enabled', array(), 'Admin.Global'),
                             ),
                             array(
                                 'id' => 'active_off',
                                 'value' => false,
-                                'label' => $this->trans('Disabled', array(), 'Admin.Global'),
+                                'label' => $this->getTranslator()->trans('Disabled', array(), 'Admin.Global'),
                             )
                         ),
                     ),
                 ),
                 'submit' => array(
-                    'title' => $this->trans('Save', array(), 'Admin.Actions'),
+                    'title' => $this->getTranslator()->trans('Save', array(), 'Admin.Actions'),
                 )
             ),
         );
@@ -473,7 +473,7 @@ class cy_multibankwire extends PaymentModule
     {
         $cart = $this->context->cart;
         $total = sprintf(
-            $this->trans('%1$s (tax incl.)', array(), 'Modules.cy_multibankwire.Shop'),
+            $this->getTranslator()->trans('%1$s (tax incl.)', array(), 'Modules.cy_multibankwire.Shop'),
             Tools::displayPrice($cart->getOrderTotal(true, Cart::BOTH))
         );
 
