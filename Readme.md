@@ -7,12 +7,10 @@ Accept payments for your products via bank wire transfer with multiple lang supp
 
 ### Requirements
 
-Prestashop 1.7
-by cypis.net[1]
+Prestashop 1.7 tested on 1.7.5.1
+
+by [cypis.net](https://www.cypis.net)
 
 ### Install
 
-
-
-[1]: https://www.cypis.net
 
